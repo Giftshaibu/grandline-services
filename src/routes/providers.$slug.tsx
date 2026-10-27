@@ -9,6 +9,14 @@ export const Route = createFileRoute("/providers/$slug")({
 function Profile() {
   const { slug } = Route.useParams();
   const query = useQuery({
+    enabled: directory.supported,
+    ...(!directory.supported
+      ? {
+          initialData: { state: "unavailable" } as Awaited<
+            ReturnType<typeof directory.detail>
+          >,
+        }
+      : {}),
     queryKey: ["provider", slug],
     queryFn: ({ signal }) => directory.detail(slug, undefined, signal),
     retry: false,

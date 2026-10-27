@@ -13,6 +13,19 @@ function Providers() {
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
   const query = useInfiniteQuery({
+    enabled: directory.supported,
+    ...(!directory.supported
+      ? {
+          initialData: {
+            pages: [
+              { state: "unavailable" } as Awaited<
+                ReturnType<typeof directory.list>
+              >,
+            ],
+            pageParams: [undefined],
+          },
+        }
+      : {}),
     queryKey: ["providers", search],
     initialPageParam: undefined as string | undefined,
     queryFn: ({ signal, pageParam }) =>
