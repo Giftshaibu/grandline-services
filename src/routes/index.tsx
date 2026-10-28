@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { HugeiconsIcon } from "@hugeicons/react";
 import ArrowUpRight01Icon from "@hugeicons/core-free-icons/ArrowUpRight01Icon";
+import { MarketplaceHero } from "../components/marketplace-hero";
 import { Search } from "../components/search";
 import { categories } from "../lib/categories";
 export const Route = createFileRoute("/")({ component: Home });
@@ -8,29 +9,15 @@ function Home() {
   const navigate = useNavigate();
   return (
     <>
-      <section className="hero">
-        <div className="wrap hero-inner">
-          <div>
-            <p className="product-label">Grandline Services</p>
-            <h1>
-              The right expertise.
-              <br />
-              For your next repair.
-            </h1>
-            <p>
-              Explore automotive services across Malawi, from everyday
-              maintenance to specialist repairs.
-            </p>
-          </div>
-          <div className="hero-aside">
-            <h2>Find the people who know your vehicle.</h2>
-            <p>
-              Search by service and location. Provider profiles and direct
-              enquiries will open when our directory is ready.
-            </p>
-          </div>
-        </div>
-      </section>
+      <MarketplaceHero
+        image="workshop"
+        title="Your vehicle. The right people."
+        description="Explore automotive shops, specialist services and spare parts across Malawi."
+      >
+        <a className="button" href="/shops">
+          Browse shops →
+        </a>
+      </MarketplaceHero>
       <section className="wrap section">
         <h2>What does your vehicle need?</h2>
         <Search
@@ -62,17 +49,18 @@ function Home() {
       </section>
       <section className="wrap help-band">
         <div>
-          <h2>A clearer view before you enquire.</h2>
+          <h2>One shop. Services and spare parts.</h2>
           <p className="muted">
-            Profiles will bring service expertise, location and available
-            contact information together.
+            Browse a business profile to explore its services and connect to
+            spare parts on Auto Hub.
           </p>
         </div>
         <div>
           <h3>Built around your search</h3>
           <p className="muted">
-            We’ll show provider information as it becomes available. Ratings and
-            verification badges will only appear when supported by real data.
+            Individual sellers can still list spare parts. Shop-owned parts will
+            connect to a shared business profile when the directory becomes
+            available.
           </p>
         </div>
       </section>
