@@ -4,9 +4,9 @@ Independent frontend for the Grandline ecosystem. Uses the Auto Hub React/TanSta
 
 ## Local development
 
-Use Node 22.12+ and npm. Run `npm ci`, copy .env.example to an untracked .env, then `npm run dev -- --port 8081`. Leave both Clerk keys empty for public browsing. Set a real publishable key and server-only CLERK_SECRET_KEY together to enable account controls. Never put secrets in VITE_* variables.
+Use Node 22.12+ and npm. Run `npm ci`, copy .env.example to an untracked .env, then `npm run dev -- --port 4301`. Leave both Clerk keys empty for public browsing. Set a real publishable key and server-only CLERK_SECRET_KEY together to enable account controls. Never put secrets in VITE_* variables.
 
-`npm run build` generates the TanStack route tree and Vercel output. Then run `npm run typecheck`, `npm run lint`, `npm test`. Install Chromium with `npx playwright install chromium`, then run `npm run test:e2e` for desktop/mobile checks. Playwright uses the built Nitro production preview; rebuild after source or environment changes. `npm run preview -- --port=8081` previews the Vercel artifact locally. Test fixtures remain under tests/; no fixture providers are rendered in the app.
+`npm run build` generates the TanStack route tree and Vercel output. Then run `npm run typecheck`, `npm run lint`, `npm test`. Install Chromium with `npx playwright install chromium`, then run `npm run test:e2e` for desktop/mobile checks. Playwright uses the built Nitro production preview; rebuild after source or environment changes. `npm run preview -- --port=4301` previews the Vercel artifact locally. Test fixtures remain under tests/; no fixture providers are rendered in the app.
 
 ## Current integration status
 
@@ -24,3 +24,11 @@ See docs/api/PROPOSED_CONTRACTS.md before backend work. src/lib/directory.ts del
 ## Source and continuity
 
 Read AGENTS.md, docs/CURRENT_STATE.md, docs/implementation/GRANDLINE_FRONTENDS_PROGRESS.md and docs/implementation/DISCOVERY.md. Existing Auto Hub files were copied selectively with provenance recorded there. No existing Markdown specifications were overwritten.
+
+## Marketplace design release
+
+The header, search dialog, mobile menu, category shortcuts, image-led heroes and footer follow Auto Hub. Product destinations stay hidden when unconfigured. Hero images are licensed editorial photographs bundled locally; they are not inventory.
+
+Shops: /shops and /shops/$slug provide the connected business presentation, with Services and Spare parts sections. Shop data and shop-filtered parts remain blocked. Configured parts links lead to all Auto Hub spare parts, preserving individual sellers.
+
+Local preview/browser checks use 4301 because Windows reserved the previous ports. Build before starting the production preview. Backend contracts remain proposed in docs/api/PROPOSED_CONTRACTS.md.

@@ -18,3 +18,13 @@ Failures: 400 invalid criteria, 401 sign-in required, 403 unauthorized, 404 deta
 Implementation blockers: category/search/detail/enquiry routes; persistence and indexes; provider publication/moderation; enquiry ownership, audit, rate limiting and deduplication; Clerk authorized parties and production CORS. No dates, routes, cargo or passenger requirements in enquiry v1; add only after a backend contract is approved.
 
 Activation: implement and validate server routes, add real integration tests, then replace the explicitly disabled adapter in a dedicated reviewed commit. There is no environment switch that silently enables proposed endpoints.
+
+## Marketplace extension — proposed, blocked
+
+No operations in this section exist in the shared backend. No frontend HTTP calls are made to these routes.
+
+### Unified shops
+
+One stable shop UUID/slug identifies a staff-managed business across Services and Auto Hub. Proposed shop category/list/detail operations support normalized q/location/category and cursor pagination consistent with the directory contract. Shop detail carries supplied description, location, contact, images and an array of services (name, category, optional description). Missing optional fields are omitted.
+
+Staff creates/edits/publishes profiles and assigns an owner identity; owner management requires backend authorization and existing parts moderation, never frontend role checks alone. Public responses exclude private ownership/contact records. A part listing may have a nullable shopId; independent sellers remain valid. Shop assignment must be authorized and public inventory includes only published parts. Shop-filtered parts discovery is proposed; until implemented, UI links only to configured Auto Hub /parts, explicitly labelled all spare parts. No shop filter or inventory count is invented.
