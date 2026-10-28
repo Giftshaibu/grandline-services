@@ -31,3 +31,7 @@ Build, typecheck, lint, unit/component and desktop/mobile browser checks passed 
 Set the same optional product URLs independently in each frontend. Services shop spare-part links use configured VITE_HUB_URL + /parts and never a hypothetical shop inventory route. Shop and pickup workflows remain frontend-only; setting an API URL does not enable them. New routes are normal SSR routes covered by the Vercel build. No backend migration, dispatch service or fare/payment provider is required for this design release.
 
 Editorial hero photos are locally served from public/marketplace-workshop.jpg and public/marketplace-road.jpg, with a dark-color fallback; loading failure must not hide text or actions. Unsplash license permits commercial use: https://unsplash.com/license. The workshop photo is photo-1486262715619-67b85e0b08d3 and the vehicle photo is photo-1503376780353-7e6692767b70. They illustrate categories, never a provider/listing or Malawi inventory. Replace with client-owned photography when supplied.
+
+## User-approved sample browsing
+
+Unavailable directory pages now expose a labelled local sample catalogue. This is a frontend preview collection, not seeded production data or an HTTP response. Details use reserved sample- slugs and noindex/nofollow; no contact, enquiry, payment or booking is enabled. Real errors retain error states. When backend support is implemented, preserve the boundary and use real results instead of local sample records.

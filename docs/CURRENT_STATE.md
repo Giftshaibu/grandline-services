@@ -12,8 +12,14 @@ Shop/category/provider data, enquiries, shop-linked parts and ownership manageme
 
 ## Verification
 
-Typecheck, lint and Vercel build passed. All 28 unit/component tests and 16 desktop/mobile Chromium tests passed. Verified search URL reloads, category menus, dialog keyboard behavior, mobile overflow, shop sections, parts links, disabled enquiries and no hypothetical API calls. Desktop/mobile screenshots were reviewed. Initial concurrent unit runs had worker startup timeouts; serial reruns passed. External-image waits were removed by bundling photos locally. Windows excludes the old preview ports; use http://127.0.0.1:4301. Remote CI was not run.
+Latest catalogue release: typecheck, lint and production build passed. All 30 unit/component tests passed; 19 desktop/mobile browser tests passed with one mobile hover-only test intentionally skipped. Browser checks cover hover opening/closing, keyboard Escape, label/chevron vertical alignment, filtered sample grids, sample detail navigation, disabled enquiries and no hypothetical API calls. Existing search, menu and pickup checks remain green. Desktop sample catalogue and mobile layouts were reviewed. Previews use port 4301. No remote CI or production deployment.
 
 ## Continue here
 
 Relevant files: src/components/shell.tsx, marketplace-hero.tsx, shop-profile.tsx; src/routes/shops*; src/lib/contracts.ts, shops.ts, marketplace.ts; tests/shops.test.tsx; e2e/marketplace.spec.ts. routeTree.gen.ts is generated and ignored. Read docs/api/PROPOSED_CONTRACTS.md and docs/DEPLOYMENT.md before enabling integration. Revert the relevant focused commits or redeploy a previous artifact to roll back. No push or deployment performed. Production demo cleanup remains separate and unexecuted.
+
+## User-requested sample catalogue and hover correction
+
+Source 8ec45ca; tests cb2aa41. The user requested a browsable placeholder catalogue after the design-only release. Local samples are therefore an explicit change to the earlier no-sample UI, separate from test fixtures and real directory gateways. Records use Example names, sample- slugs, illustrative media, no real contacts and clear sample labels on grids/details. Filters and sorting work locally. Sample details are noindex/nofollow; they cannot be booked or enquired about. No database seed, API response, account or production listing was changed.
+
+Header labels and SVG chevrons share a flex center line. Desktop pointer hover opens menus, moving away closes them unless keyboard focus is inside, and native click/Enter/Escape remain supported. No push performed.

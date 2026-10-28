@@ -28,3 +28,7 @@ No operations in this section exist in the shared backend. No frontend HTTP call
 One stable shop UUID/slug identifies a staff-managed business across Services and Auto Hub. Proposed shop category/list/detail operations support normalized q/location/category and cursor pagination consistent with the directory contract. Shop detail carries supplied description, location, contact, images and an array of services (name, category, optional description). Missing optional fields are omitted.
 
 Staff creates/edits/publishes profiles and assigns an owner identity; owner management requires backend authorization and existing parts moderation, never frontend role checks alone. Public responses exclude private ownership/contact records. A part listing may have a nullable shopId; independent sellers remain valid. Shop assignment must be authorized and public inventory includes only published parts. Shop-filtered parts discovery is proposed; until implemented, UI links only to configured Auto Hub /parts, explicitly labelled all spare parts. No shop filter or inventory count is invented.
+
+### Local catalogue samples
+
+The user subsequently approved a placeholder catalogue for browsing. Its records are frontend-only, explicitly marked samples and not API fixtures/responses, published stock or business identities. No contract implementation is implied by cards, sample rates or sample detail routes. Live creation, enquiry, inventory and shop ownership remain blocked.
