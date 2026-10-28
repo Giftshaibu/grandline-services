@@ -1,3 +1,4 @@
+import { SampleCatalogue } from "../components/sample-catalogue";
 import { createFileRoute } from "@tanstack/react-router";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { normalizeSearch } from "../lib/contracts";
@@ -62,15 +63,20 @@ function Providers() {
             : "All service categories"}{" "}
           · <a href="/providers">Clear search</a>
         </p>
-        <Availability
-          result={
-            query.isError ? { state: "error", reason: "network" } : result
-          }
-          pending={query.isPending}
-          retry={() => {
-            void query.refetch();
-          }}
-        />
+        {result?.state === "unavailable" ? (
+          <SampleCatalogue search={search} mode="providers" />
+        ) : (
+          <Availability
+            result={
+              query.isError ? { state: "error", reason: "network" } : result
+            }
+            pending={query.isPending}
+            retry={() => {
+              void query.refetch();
+            }}
+          />
+        )}
+
         {result?.state === "ready" &&
           (entries.length ? (
             <>

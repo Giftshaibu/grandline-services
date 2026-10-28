@@ -1,9 +1,15 @@
+import { sampleProviders } from "../lib/sample-catalogue";
+import { SampleNotice } from "../components/sample-notice";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { directory } from "../lib/directory";
 import { Availability } from "../components/availability";
 import { Enquiry } from "../components/enquiry";
 export const Route = createFileRoute("/providers/$slug")({
+  head: ({ params }) =>
+    params.slug.startsWith("sample-")
+      ? { meta: [{ name: "robots", content: "noindex,nofollow" }] }
+      : {},
   component: Profile,
 });
 function Profile() {
@@ -21,9 +27,15 @@ function Profile() {
     queryFn: ({ signal }) => directory.detail(slug, undefined, signal),
     retry: false,
   });
-  const result = query.data;
+  const sample = !directory.supported
+    ? sampleProviders.find((entry) => entry.slug === slug)
+    : undefined;
+  const result = sample
+    ? { state: "ready" as const, data: sample }
+    : query.data;
   return (
     <section className="wrap section">
+      {sample && <SampleNotice />}
       <nav className="breadcrumb" aria-label="Breadcrumb">
         <Link to="/">Services</Link>
         <span>/</span>

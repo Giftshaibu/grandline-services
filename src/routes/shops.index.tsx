@@ -1,3 +1,4 @@
+import { SampleCatalogue } from "../components/sample-catalogue";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { normalizeSearch } from "../lib/contracts";
@@ -40,7 +41,11 @@ function Shops() {
           {Object.values(search).filter(Boolean).join(" · ") || "All shops"} ·{" "}
           <a href="/shops">Clear search</a>
         </p>
-        <Availability result={query.data} pending={query.isPending} />
+        {query.data.state === "unavailable" ? (
+          <SampleCatalogue search={search} />
+        ) : (
+          <Availability result={query.data} pending={query.isPending} />
+        )}
         {query.data.state === "ready" && (
           <div className="cards">
             {query.data.data.items.map((shop) => (
