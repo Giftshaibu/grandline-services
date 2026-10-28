@@ -66,6 +66,16 @@ test("marketplace page visual and category navigation", async ({
     await expect(page).toHaveURL(/category=/);
   }
   await page.goto("/shops", { waitUntil: "domcontentloaded" });
+  await expect(page.locator("html")).toHaveAttribute("data-app-ready", "true");
+  await page
+    .locator("img")
+    .evaluateAll((images) =>
+      Promise.all(
+        images.map((image) =>
+          (image as HTMLImageElement).decode().catch(() => {}),
+        ),
+      ),
+    );
   await page.screenshot({
     path: info.outputPath("journey.png"),
     fullPage: true,
