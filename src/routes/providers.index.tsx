@@ -54,13 +54,7 @@ function Providers() {
           ? `Search criteria: ${Object.values(search).filter(Boolean).join(" · ")}`
           : "All service categories"}{" "}
         ·{" "}
-        <button
-          onClick={() => {
-            void navigate({ search: {} });
-          }}
-        >
-          Clear search
-        </button>
+        <a href="/providers">Clear search</a>
       </p>
       <Availability
         result={query.isError ? { state: "error", reason: "network" } : result}
