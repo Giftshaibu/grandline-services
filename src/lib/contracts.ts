@@ -69,3 +69,13 @@ export const pageSchema = z.object({
   nextCursor: z.string().nullable(),
 });
 export type Entry = z.infer<typeof entrySchema>;
+
+// Proposed unified identity; not an implemented backend API.
+export const shopSchema = providerSchema.extend({
+  services: z
+    .array(
+      z.object({ name: text, description: text.optional(), category: text }),
+    )
+    .default([]),
+});
+export type Shop = z.infer<typeof shopSchema>;
