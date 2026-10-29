@@ -156,3 +156,19 @@ test("application is disabled without JavaScript and mobile navigation links to 
       .click();
   await expect(page).toHaveURL(/list-your-business/);
 });
+
+test("page exit clears the temporary application draft", async ({ page }) => {
+  await page.goto("/list-your-business", { waitUntil: "domcontentloaded" });
+  await page.getByLabel("Business type", { exact: true }).selectOption("shop");
+  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  await page
+    .getByLabel("Business or provider name")
+    .fill("Temporary private draft");
+  await page.evaluate(() => window.dispatchEvent(new Event("pagehide")));
+  await expect(page.getByLabel("Business type", { exact: true })).toHaveValue(
+    "",
+  );
+  await page.getByLabel("Business type", { exact: true }).selectOption("shop");
+  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  await expect(page.getByLabel("Business or provider name")).toHaveValue("");
+});
