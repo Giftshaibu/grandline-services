@@ -1,25 +1,25 @@
-# Current state — 2026-10-28
+# Current state — 2026-10-29
 
-Branch: main. Marketplace checkpoint: d668dcc (shell), 6b870d9 (shops), fe784f7 (local photos), 8eebf37 (tests), followed by documentation.
+Branch: main. Listing application checkpoint: 556cfe2, tests f34e8b0, page-exit privacy e542fda, followed by focused test/documentation commits.
 
-## Implemented
+## Objective and implemented phase
 
-Services now follows Auto Hub marketplace composition: logo/search/account header, category dropdowns, native mobile menu, product-specific footer, local image-led home/browsing heroes and category cards. /shops and /shops/$slug present a unified business with Services and Spare parts sections. Parts links use configured Auto Hub /parts only; individual sellers remain supported. Unconfigured ecosystem destinations are hidden.
+Frontend-only listing applications are complete at /list-your-business. One shop or independent/mobile provider identity, multiple category/description/optional service-price offerings, optional photos, contacts and editable review. Configured spare-part links go to Auto Hub /sell/part; no shop inventory is created.
 
-## Integration limits
+Both products have six-step validation, error focus, back/edit-and-return behavior, optional local photo previews/removal, monthly fee guidance, reset and disabled final submission. Photos follow Auto Hub's 8-file / 12-MB JPEG/PNG/WebP rules; no upload code is copied. Header, mobile menu, footer and browsing pages link to the applications. Existing marketplace shell, hover menus, labelled sample catalogue and bike pickup preview remain stable.
 
-Shop/category/provider data, enquiries, shop-linked parts and ownership management remain blocked by absent backend contracts. Production gateways deliberately return unavailable; no mock shops, fake counts or successful submissions. Staff creates/assigns shops in the proposed future workflow. No new backend models/APIs, payments, onboarding or database changes. Live Clerk/session checks still require approved configuration.
+## Boundaries
+
+Drafts live in component memory only; refresh/route exit discards them. Page-hide handling clears drafts for browser back-navigation caches and revokes local photo URLs. No account draft, upload, payment, moderation record, publication or sample listing is created. Final submission remains disabled before/after hydration and without JavaScript. Public preview needs no sign-in; real submission will need authenticated ownership and staff review.
+
+The earlier staff-created-only shop model is superseded by business applications for staff approval. Real shop/directory/application/enquiry/media/status/staff-review endpoints are still absent. Fee amounts are informational category guidance, not aggregated bills or vehicle-sale price tiers; unmapped categories need staff confirmation. No government identity documents or dispatch onboarding are collected.
 
 ## Verification
 
-Latest catalogue release: typecheck, lint and production build passed. All 30 unit/component tests passed; 19 desktop/mobile browser tests passed with one mobile hover-only test intentionally skipped. Browser checks cover hover opening/closing, keyboard Escape, label/chevron vertical alignment, filtered sample grids, sample detail navigation, disabled enquiries and no hypothetical API calls. Existing search, menu and pickup checks remain green. Desktop sample catalogue and mobile layouts were reviewed. Previews use port 4301. No remote CI or production deployment.
+Typecheck, lint and independent Vercel production build pass. Latest unit/component suite: 37 passed. Full browser suite before final privacy refinement: 23 passed and one mobile hover-only test intentionally skipped. Final targeted desktop/mobile application, keyboard and page-exit checks: 8 passed. This covers form branching, validation, photo previews/removal/URL cleanup, edit-and-return, reset, refresh, no-JavaScript disabling and no upload/API transmission. Desktop/mobile layouts and review screens were inspected. Remote CI and live authenticated/backend journeys were not run.
 
-## Continue here
+## Working set / next action
 
-Relevant files: src/components/shell.tsx, marketplace-hero.tsx, shop-profile.tsx; src/routes/shops*; src/lib/contracts.ts, shops.ts, marketplace.ts; tests/shops.test.tsx; e2e/marketplace.spec.ts. routeTree.gen.ts is generated and ignored. Read docs/api/PROPOSED_CONTRACTS.md and docs/DEPLOYMENT.md before enabling integration. Revert the relevant focused commits or redeploy a previous artifact to roll back. No push or deployment performed. Production demo cleanup remains separate and unexecuted.
+Entry route: src/routes/list-your-business.tsx. Local foundations: src/components/application-*.tsx; domain form/model: src/components/business-application*.tsx and src/lib/business-application.ts. Tests: tests/*application* and e2e/application.spec.ts. Generated routeTree.gen.ts is ignored; generate with Vite. See docs/api/PROPOSED_CONTRACTS.md for blocked interfaces and docs/DEPLOYMENT.md for rollout/rollback.
 
-## User-requested sample catalogue and hover correction
-
-Source 8ec45ca; tests cb2aa41. The user requested a browsable placeholder catalogue after the design-only release. Local samples are therefore an explicit change to the earlier no-sample UI, separate from test fixtures and real directory gateways. Records use Example names, sample- slugs, illustrative media, no real contacts and clear sample labels on grids/details. Filters and sorting work locally. Sample details are noindex/nofollow; they cannot be booked or enquired about. No database seed, API response, account or production listing was changed.
-
-Header labels and SVG chevrons share a flex center line. Desktop pointer hover opens menus, moving away closes them unless keyboard focus is inside, and native click/Enter/Escape remain supported. No push performed.
+Next backend phase must implement scoped uploads, authenticated ownership, application persistence, review feedback and explicit publication before enabling submission. Roll back via normal feature reverts or previous deployment. Preview: http://127.0.0.1:4301/list-your-business. No pushes, deployment, backend changes or production demo cleanup occurred.

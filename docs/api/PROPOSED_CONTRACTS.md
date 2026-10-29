@@ -27,8 +27,27 @@ No operations in this section exist in the shared backend. No frontend HTTP call
 
 One stable shop UUID/slug identifies a staff-managed business across Services and Auto Hub. Proposed shop category/list/detail operations support normalized q/location/category and cursor pagination consistent with the directory contract. Shop detail carries supplied description, location, contact, images and an array of services (name, category, optional description). Missing optional fields are omitted.
 
-Staff creates/edits/publishes profiles and assigns an owner identity; owner management requires backend authorization and existing parts moderation, never frontend role checks alone. Public responses exclude private ownership/contact records. A part listing may have a nullable shopId; independent sellers remain valid. Shop assignment must be authorized and public inventory includes only published parts. Shop-filtered parts discovery is proposed; until implemented, UI links only to configured Auto Hub /parts, explicitly labelled all spare parts. No shop filter or inventory count is invented.
+Businesses will apply for profiles and services; staff reviews applications, assigns ownership and controls publication. Owner management requires backend authorization and existing parts moderation, never frontend role checks alone. Public responses exclude private ownership/contact records. A part listing may have a nullable shopId; independent sellers remain valid. Shop assignment must be authorized and public inventory includes only published parts. Shop-filtered parts discovery is proposed; until implemented, UI links only to configured Auto Hub /parts, explicitly labelled all spare parts. No shop filter or inventory count is invented.
 
 ### Local catalogue samples
 
 The user subsequently approved a placeholder catalogue for browsing. Its records are frontend-only, explicitly marked samples and not API fixtures/responses, published stock or business identities. No contract implementation is implied by cards, sample rates or sample detail routes. Live creation, enquiry, inventory and shop ownership remain blocked.
+
+## Listing applications — frontend implemented, backend blocked (2026-10-29)
+
+Public application entry: /list-your-business. Applications are anonymous local drafts through review only. They are not submitted, uploaded, saved to an account, added to sample cards or published. Draft state and File objects live in component memory and disappear when the route is left or refreshed. Photos have local object URLs that are revoked on change/unmount.
+
+| Proposed operation — absent | Intended capability | Authorization before activation |
+|---|---|---|
+| POST /api/v1/service-provider-applications | Validate and submit one application for staff review | Authenticated owner; server derives identity |
+| POST /api/v1/service-provider-applications/:id/media | Issue/complete a scoped media upload associated with this application | Owner or authorized staff; enforce ownership, image limits and storage policy |
+| GET /api/v1/me/service-provider-applications | Owner application list and review status | Authenticated owner only |
+| GET /api/v1/me/service-provider-applications/:id | Owner application and staff feedback | Owner only; no public contact/payment data |
+| GET /api/v1/staff/service-provider-applications | Moderation queue and application detail | Existing staff organization/role policy, enforced server-side |
+| POST /api/v1/staff/service-provider-applications/:id/review | Record approval, rejection or requested changes | Staff only, with auditable reason and explicit publication decision |
+
+These are proposed names, not implemented server routes. No frontend adapter calls them. UI-controlled numeric strings and local service row IDs are not a wire payload. Agree normalized DTOs, owner edit/resubmission rules, idempotency, moderation states, publication rules, indexes and media retention in the backend implementation before enabling submission. Do not reuse vehicle-sale submissions or private billing logic by silently changing their contracts. Real submission must require Clerk authentication, server validation and staff review; a local review is not approval.
+
+One application describes a physical shop or independent/mobile provider with name, description, base location, service areas, contact details, optional photos and multiple category/description/optional advertised whole-MWK-price offerings. The frontend caps offerings at 20 for usability; this does not establish a server limit. Staff-created-only shop entry is superseded by business applications plus staff approval. Separate spare-part listings may link to the approved business in a future authorized backend association; the current configured link opens Auto Hub /sell/part only.
+
+Fee guidance includes auto shops at MK50,000 and the supplied category rates (mechanics/electrical/diagnostics/AC MK20,000; garages/body/tyres/batteries MK50,000). Repeated categories are not repeated in the guide. No aggregate or payable quote is calculated, and advertised service prices are distinct from monthly fees.
