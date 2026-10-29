@@ -1,3 +1,4 @@
+import { ListingCallout } from "../components/listing-callout";
 import { SampleCatalogue } from "../components/sample-catalogue";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
@@ -63,6 +64,7 @@ function Shops() {
             ))}
           </div>
         )}
+        <ListingCallout />
       </section>
     </>
   );

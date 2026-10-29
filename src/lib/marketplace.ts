@@ -20,3 +20,8 @@ export function categoryLinks(href: string): { href: string; label: string }[] {
     label,
   }));
 }
+
+export const listingAction = {
+  href: "/list-your-business",
+  label: "List your business",
+} as const;

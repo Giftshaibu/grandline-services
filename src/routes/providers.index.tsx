@@ -1,3 +1,4 @@
+import { ListingCallout } from "../components/listing-callout";
 import { SampleCatalogue } from "../components/sample-catalogue";
 import { createFileRoute } from "@tanstack/react-router";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -103,6 +104,7 @@ function Providers() {
               <p>Try another service or location.</p>
             </div>
           ))}
+        <ListingCallout />
       </section>
     </>
   );

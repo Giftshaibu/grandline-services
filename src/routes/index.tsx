@@ -1,3 +1,4 @@
+import { ListingCallout } from "../components/listing-callout";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { HugeiconsIcon } from "@hugeicons/react";
 import ArrowUpRight01Icon from "@hugeicons/core-free-icons/ArrowUpRight01Icon";
@@ -63,6 +64,7 @@ function Home() {
             available.
           </p>
         </div>
+        <ListingCallout />
       </section>
     </>
   );
