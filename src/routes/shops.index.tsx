@@ -1,7 +1,7 @@
 import { ListingCallout } from "../components/listing-callout";
 import { SampleCatalogue } from "../components/sample-catalogue";
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { normalizeSearch } from "../lib/contracts";
 import { shops } from "../lib/shops";
 import { Search } from "../components/search";
@@ -14,14 +14,32 @@ export const Route = createFileRoute("/shops/")({
 function Shops() {
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
-  const query = useQuery({
+  const query = useInfiniteQuery({
     queryKey: ["shops", search],
-    queryFn: () => shops.list(search),
+    queryFn: ({ signal, pageParam }) => shops.list(search, pageParam, signal),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (page) =>
+      page.state === "ready" ? (page.data.nextCursor ?? undefined) : undefined,
+    retry: false,
     enabled: shops.supported,
-    initialData: { state: "unavailable" } as Awaited<
-      ReturnType<typeof shops.list>
-    >,
+    ...(!shops.supported
+      ? {
+          initialData: {
+            pages: [
+              { state: "unavailable" } as Awaited<
+                ReturnType<typeof shops.list>
+              >,
+            ],
+            pageParams: [undefined],
+          },
+        }
+      : {}),
   });
+  const result = query.data?.pages.at(-1);
+  const items =
+    query.data?.pages.flatMap((page) =>
+      page.state === "ready" ? page.data.items : [],
+    ) ?? [];
   return (
     <>
       <div className="browse-hero">
@@ -42,14 +60,20 @@ function Shops() {
           {Object.values(search).filter(Boolean).join(" · ") || "All shops"} ·{" "}
           <a href="/shops">Clear search</a>
         </p>
-        {query.data.state === "unavailable" ? (
+        {!shops.supported && result?.state === "unavailable" ? (
           <SampleCatalogue search={search} />
         ) : (
-          <Availability result={query.data} pending={query.isPending} />
+          <Availability
+            result={
+              query.isError ? { state: "error", reason: "network" } : result
+            }
+            pending={query.isPending}
+            retry={() => void query.refetch()}
+          />
         )}
-        {query.data.state === "ready" && (
+        {result?.state === "ready" && (
           <div className="cards">
-            {query.data.data.items.map((shop) => (
+            {items.map((shop) => (
               <article key={shop.id} className="entry-card">
                 <div className="card-body">
                   <h2>
@@ -63,6 +87,21 @@ function Shops() {
               </article>
             ))}
           </div>
+        )}
+        {result?.state === "ready" && !items.length && (
+          <div className="availability">
+            <h2>No shops match this search.</h2>
+            <p>Try another service or location.</p>
+          </div>
+        )}
+        {query.hasNextPage && (
+          <button
+            className="button secondary"
+            disabled={query.isFetchingNextPage}
+            onClick={() => void query.fetchNextPage()}
+          >
+            Load more shops
+          </button>
         )}
         <ListingCallout />
       </section>

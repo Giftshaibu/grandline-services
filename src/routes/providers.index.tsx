@@ -64,7 +64,7 @@ function Providers() {
             : "All service categories"}{" "}
           · <a href="/providers">Clear search</a>
         </p>
-        {result?.state === "unavailable" ? (
+        {!directory.supported && result?.state === "unavailable" ? (
           <SampleCatalogue search={search} mode="providers" />
         ) : (
           <Availability

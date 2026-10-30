@@ -1,3 +1,5 @@
+> Integration update2026-10-30: Services now has an opt-in live gateway, saved business applications/media, owner status/billing, staff review/publication and real service enquiries. VITE_SERVICES_LIVE defaultsfalse; controlled external staging is still required. See docs/CURRENT_STATE.md and docs/api/LIVE_SERVICES.md for current behavior. Earlier preview descriptions below are historical where superseded.
+
 # Grandline Services
 
 Independent frontend for the Grandline ecosystem. Uses the Auto Hub React/TanStack Start stack and brand assets. No separate backend or cross-repository source imports.

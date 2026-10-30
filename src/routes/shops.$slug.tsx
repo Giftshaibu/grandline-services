@@ -20,9 +20,14 @@ function ShopDetail() {
     queryKey: ["shop", slug],
     queryFn: () => shops.detail(slug),
     enabled: shops.supported,
-    initialData: { state: "unavailable" } as Awaited<
-      ReturnType<typeof shops.detail>
-    >,
+    ...(!shops.supported
+      ? {
+          initialData: { state: "unavailable" } as Awaited<
+            ReturnType<typeof shops.detail>
+          >,
+        }
+      : {}),
+    retry: false,
   });
   const sample = !shops.supported
     ? sampleShops.find((shop) => shop.slug === slug)
@@ -37,12 +42,17 @@ function ShopDetail() {
       </nav>
       {sample ? (
         <ShopProfile shop={sample} />
-      ) : query.data.state === "ready" ? (
+      ) : query.data?.state === "ready" ? (
         <ShopProfile shop={query.data.data} />
       ) : (
         <>
           <h1 className="directory-title">Shop details</h1>
-          <Availability result={query.data} />
+          <Availability
+            result={
+              query.isError ? { state: "error", reason: "network" } : query.data
+            }
+            pending={query.isPending}
+          />
           <nav className="shop-tabs" aria-label="Shop sections">
             <a href="#shop-services">Services</a>
             <a href="#shop-parts">Spare parts</a>
@@ -56,7 +66,11 @@ function ShopDetail() {
           />
         </>
       )}
-      <Enquiry />
+      <Enquiry
+        {...(query.data?.state === "ready"
+          ? { listingId: query.data.data.id }
+          : {})}
+      />
     </section>
   );
 }

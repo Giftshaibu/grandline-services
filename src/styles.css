@@ -1682,3 +1682,5 @@ textarea::placeholder {
 .skip:not(:focus) {
   clip-path: inset(50%);
 }
+
+@media (max-width:760px){.owner-account-link{display:none;}}

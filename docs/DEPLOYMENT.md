@@ -43,3 +43,9 @@ No new environment variables, backend routes, storage buckets or migrations are 
 Photo validation follows Auto Hub src/features/seller-media/api/upload.ts: up to eight nonempty JPEG/PNG/WebP files, each at most 12 MB. Only local validation/preview behavior is reused, not the upload function or billing workflows. These foundations are copied locally, with no cross-repository source imports.
 
 Roll back using a normal revert of the application feature commits or the previous independent frontend deployment. Before real activation, implement and test authenticated ownership, media uploads, staff review and publication in the shared backend, settle applicable fees there and verify real identity/session behavior. No live applications or operator dispatch are created by this release.
+
+## Live Services opt-in — 2026-10-30
+
+Keep VITE_SERVICES_LIVE=false until the backend has the matching application/publication migrations, BUSINESS_PROFILES_ENABLED, SERVICES_APPLICATIONS_ENABLED, BUSINESS_PRODUCT_BILLING_ENABLED and SERVICES_DISCOVERY_ENABLED configured, with Clerk and private media storage. Set VITE_API_BASE_URL to the backend origin (the gateway appends /api/v1). Public pages can operate without sign-in; saved applications, enquiries and staff actions require configured Clerk. Verify origins/redirects and org:admin on this product independently of Auto Hub; shared identity does not imply cross-domain cookies.
+
+Deploy additive backend migrations/code before setting the frontend flagtrue and rebuilding. Configure approved public BUSINESS_PAYMENT_ACCOUNTS and an actual Hub contact destination. Staff must verify receipts externally. Verify a controlled full journey in staging and an external inbox before production activation. Rollback the frontend flag/deployment independently; keep application/payment history. PLAYWRIGHT_PORT can isolate local regression previews from an already-running app; default4301.

@@ -1,3 +1,5 @@
+import { LiveApplicationActions } from "./live-application-actions";
+import { liveServices } from "../lib/config";
 import { useRef, useState } from "react";
 import { ApplicationWizard } from "./application-wizard";
 import {
@@ -26,6 +28,7 @@ export function BusinessApplicationFlow() {
   const [draft, setDraft] = useState(emptyBusinessApplication);
   const photos = useApplicationPhotos();
   const nextService = useRef(2);
+  const [resetKey, setResetKey] = useState(0);
   const hub = ecosystem.find((item) => item.label === "Auto Hub")?.url;
   const update = (
     field: keyof Omit<BusinessApplication, "offerings">,
@@ -51,7 +54,24 @@ export function BusinessApplicationFlow() {
         setDraft(emptyBusinessApplication());
         photos.setFiles([]);
         nextService.current = 2;
+        setResetKey((value) => value + 1);
       }}
+      {...(liveServices
+        ? {
+            liveActions: (review: boolean) => (
+              <LiveApplicationActions
+                key={resetKey}
+                draft={draft}
+                files={photos.files}
+                review={review}
+                onRestore={(value) => {
+                  setDraft(value);
+                  photos.setFiles([]);
+                }}
+              />
+            ),
+          }
+        : {})}
       fees={<ListingFeeGuide rows={businessFeeRows(draft)} />}
       renderStep={(step) =>
         step === 3 ? (

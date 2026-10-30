@@ -1,3 +1,5 @@
+import { serviceCapabilities } from "./service-capabilities";
+import { liveServices, apiBaseUrl } from "./config";
 import { z } from "zod";
 import {
   entrySchema,
@@ -48,7 +50,7 @@ export interface DirectoryGateway {
   ): Promise<Result<z.infer<typeof enquiryReceiptSchema>>>;
 }
 // Production deliberately has no HTTP gateway until the backend contracts exist.
-export const directory: DirectoryGateway = {
+const unavailableDirectory: DirectoryGateway = {
   supported: false,
   categories: async () => ({ state: "unavailable" }),
   list: async () => ({ state: "unavailable" }),
@@ -59,6 +61,7 @@ export const directory: DirectoryGateway = {
 export function createHttpGateway(
   baseUrl: string,
   transport: typeof fetch,
+  checkCapabilities = false,
 ): DirectoryGateway {
   const base = new URL(baseUrl);
   if (
@@ -75,12 +78,24 @@ export function createHttpGateway(
     token?: string,
   ): Promise<Result<T>> {
     try {
+      if (checkCapabilities) {
+        const capability = await serviceCapabilities(
+          baseUrl,
+          transport,
+          Boolean(body),
+          signal,
+        );
+        if (capability.state !== "ready") return capability;
+      }
       const response = await transport(baseUrl.replace(/\/$/, "") + path, {
         ...(signal ? { signal } : {}),
         ...(body
           ? {
               method: "POST",
-              body: JSON.stringify(enquirySchema.parse(body)),
+              body: JSON.stringify({
+                ...enquirySchema.parse(body),
+                requestKey: body.requestKey ?? crypto.randomUUID(),
+              }),
               headers: {
                 "content-type": "application/json",
                 authorization: `Bearer ${token}`,
@@ -142,3 +157,8 @@ export function createHttpGateway(
         : Promise.resolve({ state: "error", reason: "unauthorized" }),
   };
 }
+
+export const directory: DirectoryGateway =
+  liveServices && apiBaseUrl
+    ? createHttpGateway(apiBaseUrl, (...args) => fetch(...args), true)
+    : unavailableDirectory;

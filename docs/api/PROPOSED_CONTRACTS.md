@@ -1,3 +1,5 @@
+> Status update2026-10-30: historical proposals below are superseded for Services by the implemented interfaces in [LIVE_SERVICES.md](LIVE_SERVICES.md). Backend chunks1–5 are implemented/default-off; frontend chunk6 is opt-in. Shop inventory, Mobility and rides remain separately gated; a proposed operation is never called solely because it appears in this document.
+
 # Proposed contracts — NOT implemented
 
 Status: Blocked. These interfaces are a frontend proposal, not existing server routes. The UI uses a disabled adapter and sends no directory requests. Backend approval and implementation are required before enabling it. The source schema is src/lib/contracts.ts; no backend implementation is included.

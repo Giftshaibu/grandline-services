@@ -21,7 +21,7 @@ export const providerSchema = z.object({
   id: z.string().uuid(),
   slug: text,
   name: text,
-  description: text,
+  description: z.string().trim().min(1).max(2000),
   location: text,
   serviceArea: z.array(text).default([]),
   images: z.array(safeUrl).default([]),
@@ -51,6 +51,7 @@ export const enquirySchema = z.object({
     .trim()
     .min(10, "Please provide at least 10 characters.")
     .max(2000),
+  requestKey: z.string().uuid().optional(),
   name: z.string().trim().min(1).max(120),
   email: z.string().email().max(254),
 });
@@ -60,6 +61,7 @@ export const enquiryReceiptSchema = z.object({
 });
 export type Enquiry = z.infer<typeof enquirySchema>;
 export const entrySchema = providerSchema.extend({
+  businessSlug: text.optional(),
   categories: z.array(text).min(1),
   supportedMakes: z.array(text).optional(),
   operatingHours: z.array(z.object({ day: text, hours: text })).optional(),
@@ -74,7 +76,11 @@ export type Entry = z.infer<typeof entrySchema>;
 export const shopSchema = providerSchema.extend({
   services: z
     .array(
-      z.object({ name: text, description: text.optional(), category: text }),
+      z.object({
+        name: text,
+        description: z.string().max(2000).optional(),
+        category: text,
+      }),
     )
     .default([]),
 });

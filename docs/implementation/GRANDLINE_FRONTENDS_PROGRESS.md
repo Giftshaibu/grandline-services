@@ -52,3 +52,11 @@ Business applications supersede staff-created-only profiles; staff approval and 
 ## Backend roadmap update — 2026-10-29
 
 Canonical backend register: sibling grandline-backend/docs/implementation/BACKEND_INTEGRATION_PROGRESS.md and ECOSYSTEM_API.md (documentation references only, no source imports). Shared business ownership and Services draft/media/submission APIs are implemented behind default-off server capabilities. Frontend adapters remain unchanged and unavailable. Services moderation and business-product billing core are now implemented/default-off; publication and enquiries are next dependencies; Mobility and ride requests remain blocked. No frontend local preview has become a live submission. Both repositories will update contracts/handoffs when chunk 6/9 activates actual adapters.
+
+## Backend roadmap chunk6 — 2026-10-30
+
+Objective: connect Services to the implemented business/application/media/review/billing/publication/discovery/enquiry APIs. Dependencies: backend chunks1–5, Clerk identity, private media storage, configured API origin and independent gates. Acceptance: explicit owner saves, genuine uploads/receipts, status/feedback, separate staff approval/payment/publication, live empty/error states, no sample fallback. Code complete behind VITE_SERVICES_LIVE=false by default. Source working set is recorded in CURRENT_STATE.md.
+
+Checks:53 unit/component tests, typecheck/lint and production build pass. Full desktop/mobile run completed27 passing cases plus1 intended mobile hover skip; Windows server teardown then stalled. Clean targeted browser rerun8/8 passed using a separately managed preview, and screenshots were inspected. Backend PostgreSQL publication/enquiry suite5/5 passes, including authorized publication status. External Clerk/Supabase/payment/email end-to-end staging remains blocked by configuration/access and is not simulated. Test fixtures remain isolated; no production authorization bypass.
+
+Rollback: set VITE_SERVICES_LIVE=false and restore the previous frontend deployment; disable the affected backend gates while preserving application/publication/billing history. Commit recorded in Git history with the final verification handoff. No integration push or deployment authorized automatically. Only the two earlier production migration hotfixes were pushed at the user's explicit request.

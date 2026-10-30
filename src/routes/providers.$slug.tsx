@@ -87,7 +87,7 @@ function Profile() {
               )}
             </div>
           </article>
-          <Enquiry />
+          <Enquiry {...(!sample ? { listingId: result.data.id } : {})} />
         </div>
       ) : (
         <>

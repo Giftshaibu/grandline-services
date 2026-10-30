@@ -4,7 +4,7 @@ import Search01Icon from "@hugeicons/core-free-icons/Search01Icon";
 import Menu01Icon from "@hugeicons/core-free-icons/Menu01Icon";
 import ArrowDown01Icon from "@hugeicons/core-free-icons/ArrowDown01Icon";
 import Cancel01Icon from "@hugeicons/core-free-icons/Cancel01Icon";
-import { ecosystem } from "../lib/config";
+import { liveServices, ecosystem } from "../lib/config";
 import {
   listingAction,
   categoryLinks,
@@ -52,6 +52,11 @@ export function Shell({ children }: { children: React.ReactNode }) {
             >
               {listingAction.label}
             </a>
+            {liveServices && (
+              <a className="owner-account-link" href="/my-businesses">
+                My businesses
+              </a>
+            )}
             <AccountControl />
             <button
               className="icon-action mobile-menu"
@@ -67,6 +72,12 @@ export function Shell({ children }: { children: React.ReactNode }) {
           aria-label="Main navigation"
         >
           <a href="/">Home</a>
+          {liveServices && (
+            <a href="/my-businesses">
+              <strong>My businesses</strong>
+              <span>Applications and payment status</span>
+            </a>
+          )}
           {marketplaceLinks.map((item) => (
             <details
               key={item.href}
@@ -197,9 +208,19 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <nav aria-label="Mobile navigation">
           <a href={listingAction.href}>
             <strong>{listingAction.label}</strong>
-            <span>Prepare an application for future staff review</span>
+            <span>
+              {liveServices
+                ? "Save a private application for staff review"
+                : "Prepare an application for future staff review"}
+            </span>
           </a>
           <a href="/">Home</a>
+          {liveServices && (
+            <a href="/my-businesses">
+              <strong>My businesses</strong>
+              <span>Applications and payment status</span>
+            </a>
+          )}
           {marketplaceLinks.map((item) => (
             <a key={item.href} href={item.href}>
               <strong>{item.label}</strong>
@@ -238,6 +259,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
           <nav aria-label={`${productName} footer`}>
             <h3>Explore {productName}</h3>
             <a href={listingAction.href}>{listingAction.label} →</a>
+            {liveServices && <a href="/my-businesses">My businesses →</a>}
             {marketplaceLinks.map((item) => (
               <a key={item.href} href={item.href}>
                 {item.label}
@@ -257,8 +279,9 @@ export function Shell({ children }: { children: React.ReactNode }) {
           <div>
             <h3>Before you enquire</h3>
             <p>
-              Directories and online requests are being prepared. No booking or
-              payment is taken on this site.
+              {liveServices
+                ? "Send service enquiries to published providers and agree arrangements directly. Online booking and online payment are not available."
+                : "Directories and online requests are being prepared. No booking or payment is taken on this site."}
             </p>
           </div>
         </div>
