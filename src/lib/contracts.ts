@@ -1,6 +1,6 @@
 import { z } from "zod";
 const text = z.string().trim().min(1).max(300);
-const safeUrl = z
+export const safeUrl = z
   .string()
   .url()
   .refine((value) => {

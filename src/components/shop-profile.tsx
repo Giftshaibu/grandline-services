@@ -1,3 +1,5 @@
+import { ShopStock } from "./shop-stock";
+import { liveServices } from "../lib/config";
 import type { Shop } from "../lib/contracts";
 import { ecosystem } from "../lib/config";
 export function ShopProfile({ shop }: { shop: Shop }) {
@@ -23,6 +25,7 @@ export function ShopProfile({ shop }: { shop: Shop }) {
       <nav className="shop-tabs" aria-label="Shop sections">
         <a href="#shop-services">Services</a>
         <a href="#shop-parts">Spare parts</a>
+        <a href="#shop-vehicles">Vehicles</a>
       </nav>
       <section id="shop-services">
         <h2>Services</h2>
@@ -37,7 +40,12 @@ export function ShopProfile({ shop }: { shop: Shop }) {
           <p>Service details have not been supplied.</p>
         )}
       </section>
-      <ShopParts hub={hub} />
+      {liveServices ? (
+        <ShopStock slug={shop.slug} kind="spare-parts" />
+      ) : (
+        <ShopParts hub={hub} />
+      )}
+      <ShopStock slug={shop.slug} kind="vehicles" />
     </article>
   );
 }
