@@ -1,3 +1,4 @@
+import { EcosystemDiscovery } from "../components/ecosystem-navigation";
 import { ListingCallout } from "../components/listing-callout";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -48,6 +49,7 @@ function Home() {
           ))}
         </div>
       </section>
+      <EcosystemDiscovery />
       <section className="wrap help-band">
         <div>
           <h2>One shop. Services and spare parts.</h2>

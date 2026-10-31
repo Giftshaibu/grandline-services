@@ -1,5 +1,7 @@
 # Deployment and rollback
 
+Current navigation defaults are the verified published Auto Hub/Services/Mobility URLs in .env.example. Blank ecosystem variables use those defaults; configured HTTP(S) values override them. This supersedes older blank-destination hiding guidance below.
+
 Deploy this repository independently to Vercel with Node 22.12+ and `npm run build`. scripts/build.mjs selects the Vercel Nitro preset; .vercel/output is generated and ignored. CI runs reproducible install, build, typecheck, lint, unit/component tests and desktop/mobile Chromium checks. No Docker or Kubernetes is added to these frontends.
 
 Configure optional VITE_HUB_URL, VITE_SERVICES_URL, VITE_MOBILITY_URL as actual public HTTP(S) destinations. Empty destinations are hidden. VITE_API_BASE_URL points to the existing shared backend when actual integration becomes available; setting it alone does not enable proposed directory endpoints.

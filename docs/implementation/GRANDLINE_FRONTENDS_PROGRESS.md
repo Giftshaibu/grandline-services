@@ -1,5 +1,11 @@
 # Frontend progress
 
+## Cross-site navigation — 2026-10-31
+
+Added the Grandline site switcher, homepage discovery sections and reciprocal mobile/footer links. Published defaults: Auto Hub https://www.grandlineautomw.com, Services https://services.grandlineautomw.com, Mobility https://grandline-mobility.vercel.app. URLs were resolved from the published repositories and checked over HTTPS; Services redirects to its custom domain. VITE_HUB_URL/VITE_SERVICES_URL/VITE_MOBILITY_URL still override destinations. Blank settings now use these known public defaults rather than hiding the links. Invalid or credential-bearing URLs are not used as navigation targets. No backend, authentication or product capability gates changed.
+
+The user explicitly requested this update be committed/pushed without tests. No test suite or browser tests were run for this navigation push; preliminary typecheck/lint/build commands had already been started before that instruction, and no further checks were requested. Deployment success is not confirmed. Rollback by reverting the focused navigation commit or overriding the public destination settings.
+
 ## Ecosystem backend checkpoint — 2026-10-31
 
 Backend roadmap chunks 9–11 now provide the independent Mobility frontend integration and private bike/taxi request/quote/assignment journey. Services deployment flags are unchanged. A proven shared restored-draft privacy issue was fixed in the owning saved-application hook: scope exit clears lifted private fields before paint, late responses cannot restore them, and StrictMode replay does not discard a newly mounted form.60 unit/component tests plus a focused2/2 privacy rerun, typecheck/lint/build pass. Shared publication responses also add stored kind for reliable Mobility links. Rollback restores the previous deployment while preserving server records. Canonical status remains in sibling grandline-backend/docs/implementation/BACKEND_INTEGRATION_PROGRESS.md; notifications/rollout are chunks12–13. Focused fix commit recorded in Git history; no automatic push or activation.
