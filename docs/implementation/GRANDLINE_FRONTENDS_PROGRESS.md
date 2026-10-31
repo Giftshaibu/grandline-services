@@ -1,5 +1,9 @@
 # Frontend progress
 
+## Ecosystem backend checkpoint — 2026-10-31
+
+Backend roadmap chunks 9–11 now provide the independent Mobility frontend integration and private bike/taxi request/quote/assignment journey. Services deployment flags are unchanged. A proven shared restored-draft privacy issue was fixed in the owning saved-application hook: scope exit clears lifted private fields before paint, late responses cannot restore them, and StrictMode replay does not discard a newly mounted form.60 unit/component tests plus a focused2/2 privacy rerun, typecheck/lint/build pass. Shared publication responses also add stored kind for reliable Mobility links. Rollback restores the previous deployment while preserving server records. Canonical status remains in sibling grandline-backend/docs/implementation/BACKEND_INTEGRATION_PROGRESS.md; notifications/rollout are chunks12–13. Focused fix commit recorded in Git history; no automatic push or activation.
+
 Updated 2026-10-28. Acceptance follows the approved frontend-first plan. Frontend complete does not mean live data or enquiries are enabled. Every absent backend operation remains blocked; see docs/api/PROPOSED_CONTRACTS.md.
 
 | Chunk | Objective | Dependencies | Status | Acceptance/checks | Commit |

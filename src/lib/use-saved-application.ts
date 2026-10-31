@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { z } from "zod";
 import {
   applicationResponse,
@@ -10,6 +11,7 @@ import {
 import { serviceDraft, restoreServiceDraft } from "./service-draft";
 import {
   businessErrors,
+  emptyBusinessApplication,
   type BusinessApplication,
 } from "./business-application";
 import {
@@ -24,6 +26,20 @@ export function useSavedApplication(
   onRestore: (draft: BusinessApplication) => void,
   session: Session,
 ) {
+  const discard = useRef(onRestore);
+  discard.current = onRestore;
+  const active = useRef(true);
+  const restoredPrivateDraft = useRef(false);
+  useLayoutEffect(() => {
+    active.current = true;
+    return () => {
+      active.current = false;
+      queueMicrotask(() => {
+        if (!active.current && restoredPrivateDraft.current)
+          flushSync(() => discard.current(emptyBusinessApplication()));
+      });
+    };
+  }, []);
   const [application, setApplication] = useState<SavedApplication | null>(null);
   const [businesses, setBusinesses] = useState<{ id: string; name: string }[]>(
     [],
@@ -84,7 +100,9 @@ export function useSavedApplication(
         token,
       )
     ).application;
+    if (!active.current) return;
     const restored = restoreServiceDraft(row.payload);
+    restoredPrivateDraft.current = true;
     setApplication(row);
     setBusinessId(row.businessId);
     setPublishPhone(restored.publishPhone);

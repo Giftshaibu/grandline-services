@@ -1,6 +1,6 @@
-# Current state — 2026-10-30
+# Current state — 2026-10-31
 
-Branch: main. Active phase: backend roadmap chunk6, Services frontend integration. Independent React/TanStack Start application, Auto Hub design tokens and local components retained. No automatic integration push, deployment or production activation.
+Branch: main. Services integration and connected shop inventory are implemented/default-off. A focused account-scope privacy fix now clears restored private application fields before the next paint and ignores late private resume responses after sign-out/account changes. Independent React/TanStack Start architecture remains intact. No automatic push, deployment or production activation.
 
 ## Implemented
 
@@ -14,11 +14,11 @@ VITE_SERVICES_LIVE=false (default) preserves the labelled sample catalogue and m
 
 Backend: BUSINESS_PROFILES_ENABLED, SERVICES_APPLICATIONS_ENABLED, BUSINESS_PRODUCT_BILLING_ENABLED, SERVICES_DISCOVERY_ENABLED, configured private Supabase storage, Clerk, and applied migrations. Frontend: VITE_SERVICES_LIVE, API URL and paired Clerk public/server keys. No API keys in frontend public variables. Payment accounts/contact destinations remain explicitly configured; no fabricated accounts. Sending email requires verified Resend configuration and the running outbox.
 
-Shop-linked vehicle/part tabs and Auto Hub associations are implemented/default-off in chunk7. Mobility/ride operations remain later chunks. Real authenticated cross-domain Clerk/Supabase/payment/email staging journeys are not claimed verified; production remains gated on concrete configuration and approval.
+Shop-linked inventory is implemented/default-off in chunk7. The independent Mobility/ride code is now implemented in chunks9–11; Services gates are unchanged. Actual cross-domain Clerk/Supabase/payment/email journeys still require configured staging.
 
 ## Verification
 
-Typecheck/lint/production build pass.58 unit/component tests pass, covering capability/error boundaries, normalized drafts, explicit-save behavior, upload recovery, enquiry keys, owner/staff controls and payment-gated publication. Vitest uses one fork worker after Windows thread workers stalled; no production runtime change. Full desktop/mobile run completed27 passing cases and1 intentional mobile hover skip; its Windows server teardown stalled after all cases. A clean targeted rerun against a separately managed preview passed8/8 application/access cases. Desktop/mobile screenshots were inspected. Real signed-in external-provider browser journeys remain gated.
+Typecheck/lint/production build pass.60 unit/component tests pass, including restored-draft disposal and late-response isolation alongside capability, upload, enquiry, billing and staff controls. The final focused privacy rerun passes2/2. Existing browser checkpoint:27 passed/1 mobile hover skip, with a clean targeted8/8 rerun after a Windows teardown stall. No production credentials/data used; external authenticated provider journeys remain gated.
 
 ## Working set and next action
 
