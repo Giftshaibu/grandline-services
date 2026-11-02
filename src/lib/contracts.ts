@@ -18,6 +18,7 @@ export const contactSchema = z.object({
     .optional(),
 });
 export const providerSchema = z.object({
+  reviewStatus: z.enum(["pending", "approved"]).optional(),
   id: z.string().uuid(),
   slug: text,
   name: text,
@@ -61,6 +62,7 @@ export const enquiryReceiptSchema = z.object({
 });
 export type Enquiry = z.infer<typeof enquirySchema>;
 export const entrySchema = providerSchema.extend({
+  reviewStatus: z.enum(["pending", "approved"]).optional(),
   businessSlug: text.optional(),
   categories: z.array(text).min(1),
   supportedMakes: z.array(text).optional(),

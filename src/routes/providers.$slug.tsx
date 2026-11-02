@@ -27,7 +27,7 @@ function Profile() {
     queryFn: ({ signal }) => directory.detail(slug, undefined, signal),
     retry: false,
   });
-  const sample = !directory.supported
+  const sample = import.meta.env.DEV && !directory.supported
     ? sampleProviders.find((entry) => entry.slug === slug)
     : undefined;
   const result = sample
@@ -44,6 +44,7 @@ function Profile() {
       {result?.state === "ready" ? (
         <div className="detail-layout">
           <article>
+            {result.data.reviewStatus === "pending" && <p><strong>Pending review</strong></p>}
             <h1 className="directory-title">{result.data.name}</h1>
             <p>{result.data.location}</p>
             {result.data.images[0] && (

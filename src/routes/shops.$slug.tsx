@@ -29,7 +29,7 @@ function ShopDetail() {
       : {}),
     retry: false,
   });
-  const sample = !shops.supported
+  const sample = import.meta.env.DEV && !shops.supported
     ? sampleShops.find((shop) => shop.slug === slug)
     : undefined;
   return (

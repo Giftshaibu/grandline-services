@@ -6,6 +6,7 @@ export function ProviderCard({ entry }: { entry: Entry }) {
         <img src={entry.images[0]} alt={entry.name} loading="lazy" />
       )}
       <div className="card-body">
+        {entry.reviewStatus === "pending" && <p className="muted"><strong>Pending review</strong></p>}
         <h3>
           <a href={`/providers/${encodeURIComponent(entry.slug)}`}>
             {entry.name}

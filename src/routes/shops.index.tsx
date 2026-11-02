@@ -76,6 +76,7 @@ function Shops() {
             {items.map((shop) => (
               <article key={shop.id} className="entry-card">
                 <div className="card-body">
+                  {shop.reviewStatus === "pending" && <p><strong>Pending review</strong></p>}
                   <h2>
                     <a href={`/shops/${encodeURIComponent(shop.slug)}`}>
                       {shop.name}

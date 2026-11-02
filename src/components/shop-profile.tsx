@@ -6,6 +6,7 @@ export function ShopProfile({ shop }: { shop: Shop }) {
   const hub = ecosystem.find((item) => item.label === "Auto Hub")?.url;
   return (
     <article>
+      {shop.reviewStatus === "pending" && <p><strong>Pending review</strong></p>}
       <h1 className="directory-title">{shop.name}</h1>
       <p className="muted">{shop.location}</p>
       {shop.images[0] && (
