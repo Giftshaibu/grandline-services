@@ -1,3 +1,4 @@
+import { NotificationOperations, EnquiryInbox } from "./notification-center";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { AuthSession, type Session } from "./auth-session";
@@ -17,7 +18,7 @@ export function StaffApplications() {
         <AuthSession>
           {(session) =>
             session.staff ? (
-              <StaffQueue session={session} />
+              <><NotificationOperations session={session} /><EnquiryInbox session={session} product="services" staff /><StaffQueue session={session} /></>
             ) : (
               <p>
                 Staff access requires the active Clerk organization’s admin

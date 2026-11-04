@@ -1,3 +1,4 @@
+import { NotificationInbox, EnquiryInbox } from "./notification-center";
 import { useEffect, useState } from "react";
 import {
   applicationPage,
@@ -17,7 +18,7 @@ export function BusinessDashboard() {
       </p>
       {liveServices ? (
         <AuthSession>
-          {(session) => <OwnerApplications session={session} />}
+          {(session) => <><NotificationInbox session={session} /><EnquiryInbox session={session} product="services" /><OwnerApplications session={session} /></>}
         </AuthSession>
       ) : (
         <p>
