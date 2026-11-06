@@ -237,7 +237,7 @@ describe("business billing and staff controls", () => {
     );
     fireEvent.click(screen.getByText("Submit for staff review"));
     await screen.findByText(
-      "Application submitted for staff review. Approval and verified monthly payment are required before publication.",
+      "Application submitted. Eligible listings are published while staff review them. Payment has a seven-day verification period. Check My businesses for your publication and payment status.",
     );
     expect(screen.getByText("Save draft and photos")).toBeDisabled();
   });

@@ -1,27 +1,25 @@
-import { CatalogueCardFrame } from "@grandline/ui";
+import { CatalogueCardFrame, CatalogueImage, CatalogueCardBody, CatalogueTitle } from "@grandline/ui";
 import type { Entry } from "../lib/contracts";
 export function ProviderCard({ entry }: { entry: Entry }) {
   return (
     <CatalogueCardFrame className="entry-card">
-      {entry.images[0] && (
-        <img src={entry.images[0]} alt={entry.name} loading="lazy" />
-      )}
-      <div className="card-body">
-        {entry.reviewStatus === "pending" && <p className="muted"><strong>Pending review</strong></p>}
-        <h3>
+      <CatalogueImage src={entry.images[0]} alt={entry.name} />
+      <CatalogueCardBody>
+        {entry.reviewStatus === "pending" && <p className="grandline-public-review">Pending review</p>}
+        <CatalogueTitle>
           <a href={`/providers/${encodeURIComponent(entry.slug)}`}>
             {entry.name}
           </a>
-        </h3>
-        <p>{entry.location}</p>
-        <p className="muted">{entry.categories.join(" · ")}</p>
+        </CatalogueTitle>
+        <p className="grandline-card-meta">{entry.location}</p>
+        <p className="grandline-card-meta">{entry.categories.join(" · ")}</p>
         <a
           className="button secondary"
           href={`/providers/${encodeURIComponent(entry.slug)}`}
         >
           View provider
         </a>
-      </div>
+      </CatalogueCardBody>
     </CatalogueCardFrame>
   );
 }

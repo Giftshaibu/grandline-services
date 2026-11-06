@@ -1,3 +1,4 @@
+import { HeaderFrame, HeaderRow } from "@grandline/ui";
 import { EcosystemNavigation } from "./ecosystem-navigation";
 import { useRef } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -24,6 +25,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       <a className="skip" href="#main-content">
         Skip to content
       </a>
+      <HeaderFrame>
       <div className="topline">
         <div className="wrap topline-inner">
           <span>Vehicles, parts and services across Malawi</span>
@@ -31,45 +33,14 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </div>
       </div>
       <EcosystemNavigation />
-      <header className="market-header">
-        <div className="wrap site-header">
+      <HeaderRow>
           <a
             href="/"
             aria-label={`grandlineauto ${productName.toLowerCase()} home`}
           >
             <img className="brand" src="/logo-full.svg" alt="grandlineauto" />
-            <span className="product-name">{productName}</span>
+
           </a>
-          <div className="header-actions">
-            <button
-              className="icon-action"
-              aria-label="Open search"
-              onClick={() => search.current?.showModal()}
-            >
-              <HugeiconsIcon icon={Search01Icon} size={23} />
-              <span>Search</span>
-            </button>
-            <a
-              className="button header-listing-action"
-              href={listingAction.href}
-            >
-              {listingAction.label}
-            </a>
-            {liveServices && (
-              <a className="owner-account-link" href="/my-businesses">
-                My businesses
-              </a>
-            )}
-            <AccountControl />
-            <button
-              className="icon-action mobile-menu"
-              aria-label="Open menu"
-              onClick={() => menu.current?.showModal()}
-            >
-              <HugeiconsIcon icon={Menu01Icon} size={24} />
-            </button>
-          </div>
-        </div>
         <nav
           className="product-nav wrap desktop-nav"
           aria-label="Main navigation"
@@ -142,7 +113,37 @@ export function Shell({ children }: { children: React.ReactNode }) {
             </details>
           ))}
         </nav>
-      </header>
+          <div className="header-actions">
+            <button
+              className="icon-action"
+              aria-label="Open search"
+              onClick={() => search.current?.showModal()}
+            >
+              <HugeiconsIcon icon={Search01Icon} size={23} />
+              <span>Search</span>
+            </button>
+            <a
+              className="button header-listing-action"
+              href={listingAction.href}
+            >
+              {listingAction.label}
+            </a>
+            {liveServices && (
+              <a className="owner-account-link" href="/my-businesses">
+                My businesses
+              </a>
+            )}
+            <AccountControl />
+            <button
+              className="icon-action mobile-menu"
+              aria-label="Open menu"
+              onClick={() => menu.current?.showModal()}
+            >
+              <HugeiconsIcon icon={Menu01Icon} size={24} />
+            </button>
+          </div>
+      </HeaderRow>
+      </HeaderFrame>
       <dialog
         ref={search}
         className="market-dialog"
@@ -199,6 +200,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
             <HugeiconsIcon icon={Cancel01Icon} size={24} />
           </button>
         </div>
+        <AccountControl />
         <nav aria-label="Mobile navigation">
           <a href={listingAction.href}>
             <strong>{listingAction.label}</strong>
