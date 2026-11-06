@@ -1,3 +1,4 @@
+import { liveServices } from "../lib/config";
 import { listingAction } from "../lib/marketplace";
 export function ListingCallout() {
   return (
@@ -5,13 +6,10 @@ export function ListingCallout() {
       <div>
         <h2>Bring your business to Grandline</h2>
         <p>
-          Prepare your business or offering details, add optional photos and
-          review your application. Final submission is not available yet.
+          {liveServices ? "List your business or offering now. It can go live while staff review it, with seven days for payment verification." : "New listing registration is temporarily unavailable. Please check back soon."}
         </p>
       </div>
-      <a className="button" href={listingAction.href}>
-        {listingAction.label} →
-      </a>
+      {liveServices && <a className="button" href={listingAction.href}>{listingAction.label} →</a>}
     </aside>
   );
 }

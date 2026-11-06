@@ -1,7 +1,8 @@
+import { CatalogueCardFrame } from "@grandline/ui";
 import type { Entry } from "../lib/contracts";
 export function ProviderCard({ entry }: { entry: Entry }) {
   return (
-    <article className="entry-card">
+    <CatalogueCardFrame className="entry-card">
       {entry.images[0] && (
         <img src={entry.images[0]} alt={entry.name} loading="lazy" />
       )}
@@ -21,6 +22,6 @@ export function ProviderCard({ entry }: { entry: Entry }) {
           View provider
         </a>
       </div>
-    </article>
+    </CatalogueCardFrame>
   );
 }
