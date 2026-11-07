@@ -1,3 +1,4 @@
+import { OwnerListingActions } from "./owner-listing-actions";
 import { NotificationInbox, EnquiryInbox } from "./notification-center";
 import { useEffect, useState } from "react";
 import {
@@ -11,14 +12,20 @@ import { liveServices } from "../lib/config";
 export function BusinessDashboard() {
   return (
     <section className="wrap section">
-      <h1 className="directory-title">My businesses</h1>
+      <h1 className="directory-title">My listings</h1>
       <p>
-        Resume saved applications, read staff feedback and review your monthly
-        payment status.
+        View your listings, edit details and photos, or remove a listing from
+        public browsing.
       </p>
       {liveServices ? (
         <AuthSession>
-          {(session) => <><NotificationInbox session={session} /><EnquiryInbox session={session} product="services" /><OwnerApplications session={session} /></>}
+          {(session) => (
+            <>
+              <NotificationInbox session={session} />
+              <EnquiryInbox session={session} product="services" />
+              <OwnerApplications session={session} />
+            </>
+          )}
         </AuthSession>
       ) : (
         <p>
@@ -100,7 +107,7 @@ function OwnerApplications({ session }: { session: Session }) {
           {application.publication?.published && (
             <p>
               <a
-                href={`/providers/${encodeURIComponent(application.publication.slug)}`}
+                href={`/${application.payload["type"] === "shop" ? "shops" : "providers"}/${encodeURIComponent(application.publication.slug)}`}
               >
                 View published profile
               </a>
@@ -115,11 +122,19 @@ function OwnerApplications({ session }: { session: Session }) {
               </p>
             ))}
           <div className="application-actions">
-            <a
-              href={`/list-your-business?application=${encodeURIComponent(application.id)}`}
-            >
-              Resume application
-            </a>
+            <OwnerListingActions
+              application={application}
+              session={session}
+              product="services"
+              editPath={`/list-your-business?application=${encodeURIComponent(application.id)}`}
+              onChanged={(updated) =>
+                setApplications((items) =>
+                  items.map((item) =>
+                    item.id === updated.id ? updated : item,
+                  ),
+                )
+              }
+            />
             <button
               type="button"
               className="button secondary"

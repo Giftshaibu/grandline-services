@@ -1,3 +1,4 @@
+import { ListingGallery } from "@grandline/ui/images";
 import { ShopStock } from "./shop-stock";
 import { liveServices } from "../lib/config";
 import type { Shop } from "../lib/contracts";
@@ -6,12 +7,14 @@ export function ShopProfile({ shop }: { shop: Shop }) {
   const hub = ecosystem.find((item) => item.label === "Auto Hub")?.url;
   return (
     <article>
-      {shop.reviewStatus === "pending" && <p><strong>Pending review</strong></p>}
+      {shop.reviewStatus === "pending" && (
+        <p>
+          <strong>Pending review</strong>
+        </p>
+      )}
       <h1 className="directory-title">{shop.name}</h1>
       <p className="muted">{shop.location}</p>
-      {shop.images[0] && (
-        <img className="detail-image" src={shop.images[0]} alt={shop.name} />
-      )}
+      <ListingGallery images={shop.images} name={shop.name} />
       <p>{shop.description}</p>
       <div className="contact-links">
         {shop.contact.phone && (

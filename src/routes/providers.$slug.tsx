@@ -1,3 +1,4 @@
+import { ListingGallery } from "@grandline/ui/images";
 import { sampleProviders } from "../lib/sample-catalogue";
 import { SampleNotice } from "../components/sample-notice";
 import { createFileRoute, Link } from "@tanstack/react-router";
@@ -27,9 +28,10 @@ function Profile() {
     queryFn: ({ signal }) => directory.detail(slug, undefined, signal),
     retry: false,
   });
-  const sample = import.meta.env.DEV && !directory.supported
-    ? sampleProviders.find((entry) => entry.slug === slug)
-    : undefined;
+  const sample =
+    import.meta.env.DEV && !directory.supported
+      ? sampleProviders.find((entry) => entry.slug === slug)
+      : undefined;
   const result = sample
     ? { state: "ready" as const, data: sample }
     : query.data;
@@ -44,16 +46,17 @@ function Profile() {
       {result?.state === "ready" ? (
         <div className="detail-layout">
           <article>
-            {result.data.reviewStatus === "pending" && <p><strong>Pending review</strong></p>}
+            {result.data.reviewStatus === "pending" && (
+              <p>
+                <strong>Pending review</strong>
+              </p>
+            )}
             <h1 className="directory-title">{result.data.name}</h1>
             <p>{result.data.location}</p>
-            {result.data.images[0] && (
-              <img
-                className="detail-image"
-                src={result.data.images[0]}
-                alt={result.data.name}
-              />
-            )}
+            <ListingGallery
+              images={result.data.images}
+              name={result.data.name}
+            />
             <p>{result.data.description}</p>
             <h2>Expertise</h2>
             <p>{result.data.categories.join(" · ")}</p>
