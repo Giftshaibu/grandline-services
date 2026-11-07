@@ -256,6 +256,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
           </div>
           <nav aria-label={`${productName} footer`}>
             <h3>Explore {productName}</h3>
+            <a href="/contact">Contact the team</a>
             <a href={listingAction.href}>{listingAction.label} →</a>
             {liveServices && <a href="/my-businesses">My listings →</a>}
             {marketplaceLinks.map((item) => (
