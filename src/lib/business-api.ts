@@ -61,6 +61,8 @@ export const applicationSchema = z.object({
   publication: z
     .object({
       published: z.boolean(),
+      feeExempt: z.boolean().optional(),
+      mediaIds: z.array(z.string()).optional(),
       revision: z.number().int(),
       slug: z.string(),
     })
@@ -77,6 +79,7 @@ export const applicationSchema = z.object({
     "rejected",
   ]),
   payload: z.record(z.unknown()),
+  submittedMediaIds: z.array(z.string()).optional(),
   media: z.array(mediaSchema),
   events: z.array(
     z.object({
